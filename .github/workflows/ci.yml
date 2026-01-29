@@ -12,6 +12,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build back-end JAR
+        run: chmod +x BackEnd/gradlew && cd BackEnd && ./gradlew build -x test
+
+      - name: Build front-end JAR
+        run: chmod +x FrontEnd/gradlew && cd FrontEnd && ./gradlew build -x test
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
