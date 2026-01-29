@@ -36,6 +36,17 @@ spec:
         - name: back-end-container
           image: damienphilippe/back-end:latest
           imagePullPolicy: Always
+          env:
+            - name: DB_HOST
+              value: postgres-service
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: users_db
+            - name: DB_USER
+              value: postgres
+            - name: DB_PASSWORD
+              value: postgres
 ---
 
 apiVersion: v1
@@ -64,3 +75,51 @@ spec:
   type: ClusterIP
   selector:
     app: back-end
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres-container
+          image: postgres:15-alpine
+          env:
+            - name: POSTGRES_DB
+              value: users_db
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-storage
+          emptyDir: {}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  ports:
+    - name: postgres
+      targetPort: 5432
+      port: 5432
+  type: ClusterIP
+  selector:
+    app: postgres
