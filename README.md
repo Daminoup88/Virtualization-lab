@@ -8,13 +8,13 @@
 	```sh
 	kubectl apply -f front-back-app.yml
 	```
-- Apply ingress configuration:
-	```sh
-	kubectl apply -f ingress.yml
-	```
 - Enable ingress addon:
 	```sh
 	minikube addons enable ingress
+	```
+- Apply ingress configuration:
+	```sh
+	kubectl apply -f ingress.yml
 	```
 - Launch minikube tunnel:
     ```sh
