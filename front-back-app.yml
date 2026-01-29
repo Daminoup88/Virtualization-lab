@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: front-end-container
-        image: efrei/front-end:1
+        image: damienphilippe/front-end:latest
         imagePullPolicy: Always
 ---
 
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: back-end-container
-          image: efrei/back-end:1
+          image: damienphilippe/back-end:latest
           imagePullPolicy: Always
 ---
 
