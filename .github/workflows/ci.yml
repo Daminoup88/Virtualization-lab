@@ -39,7 +39,9 @@ jobs:
           context: ./BackEnd
           file: ./BackEnd/Dockerfile
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/back-end:latest
+          tags: |
+            ${{ vars.DOCKERHUB_USERNAME }}/back-end:latest
+            ${{ vars.DOCKERHUB_USERNAME }}/back-end:${{ github.sha }}
 
       - name: Build and push front-end image
         uses: docker/build-push-action@v6
@@ -47,4 +49,6 @@ jobs:
           context: ./FrontEnd
           file: ./FrontEnd/Dockerfile
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/front-end:latest
+          tags: |
+            ${{ vars.DOCKERHUB_USERNAME }}/front-end:latest
+            ${{ vars.DOCKERHUB_USERNAME }}/front-end:${{ github.sha }}
